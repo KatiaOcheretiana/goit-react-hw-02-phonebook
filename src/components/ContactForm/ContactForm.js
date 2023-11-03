@@ -1,9 +1,15 @@
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik } from 'formik';
 import * as Yup from 'yup';
+import { Form, Field, ErrorMessage, Button } from './ContactForm.styled';
 
 const ContactSchema = Yup.object().shape({
   name: Yup.string().min(3, 'Too Short!').required('Required'),
-  number: Yup.number().min(10, 'Must be 5 or more').required('Required'),
+  number: Yup.string()
+    .matches(
+      /^[0-9]{3}-[0-9]{2}-[0-9]{2}$/,
+      'Invalid number format (e.g., xxx-xx-xx)'
+    )
+    .required('Number is required'),
 });
 
 export const ContactForm = ({ onAdd }) => {
@@ -29,7 +35,7 @@ export const ContactForm = ({ onAdd }) => {
           <ErrorMessage name="number" component="span" />
         </label>
 
-        <button type="submit">Add contact</button>
+        <Button type="submit">Add contact</Button>
       </Form>
     </Formik>
   );

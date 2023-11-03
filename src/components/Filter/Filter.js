@@ -1,8 +1,10 @@
+import { FindSection, Title, InputField } from './Filter.styled';
+
 export const Filter = ({ searchContact }) => {
   return (
-    <div>
-      <p>Find contacts by name</p>
-      <input onChange={searchContact} />
-    </div>
+    <FindSection>
+      <Title>Find contacts by name</Title>
+      <InputField onChange={searchContact} />
+    </FindSection>
   );
 };
