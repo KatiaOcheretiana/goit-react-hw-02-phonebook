@@ -18,7 +18,7 @@ export class App extends Component {
 
   handleAddContactToList = newContact => {
     const isNameRepeat = this.state.contacts.some(
-      contact => contact.name === newContact.name
+      contact => contact.name.toLowerCase() === newContact.name.toLowerCase()
     );
     if (isNameRepeat) {
       alert(`${newContact.name} is already in contacts.`);
@@ -32,8 +32,8 @@ export class App extends Component {
   };
 
   searchContactByName = e => {
-    const name = e.currentTarget.value;
-    this.setState({ filter: name });
+    const { value } = e.currentTarget;
+    this.setState({ filter: value });
   };
 
   deleteContact = contactId => {
@@ -42,12 +42,14 @@ export class App extends Component {
     }));
   };
 
-  render() {
-    const { contacts, filter } = this.state;
-
-    const visibleContacts = contacts.filter(item => {
-      return item.name.toLowerCase().includes(filter.toLowerCase());
+  getVisibleContacts = () => {
+    return this.state.contacts.filter(item => {
+      return item.name.toLowerCase().includes(this.state.filter.toLowerCase());
     });
+  };
+
+  render() {
+    const visibleContacts = this.getVisibleContacts();
 
     return (
       <Section>
